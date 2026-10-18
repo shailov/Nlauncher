@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="ru" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NLauncher — Твой идеальный Minecraft (Windows)</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        darkBg: '#08080c',
+                        cardBg: '#101016',
+                        neonPurple: '#a855f7',
+                        neonCyan: '#06b6d4',
+                    },
+                    animation: {
+                        'spin-slow': 'spin 8s linear infinite',
+                        'pulse-fast': 'pulse 1s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Google Fonts Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #08080c;
+            color: #f4f4f5;
+        }
+        .glow-purple {
+            box-shadow: 0 0 35px rgba(168, 85, 247, 0.25);
+        }
+        .glow-cyan {
+            box-shadow: 0 0 35px rgba(6, 182, 212, 0.25);
+        }
+        .glass-card {
+            background: rgba(16, 16, 22, 0.7);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        .glass-nav {
+            background: rgba(8, 8, 12, 0.85);
+            backdrop-filter: blur(12px);
+        }
+    </style>
+</head>
+<body class="bg-darkBg text-zinc-100 selection:bg-neonPurple selection:text-white overflow-x-hidden flex flex-col min-h-screen">
+
+    <!-- Шапка (Header) -->
+    <header class="fixed top-0 left-0 right-0 z-50 glass-nav border-b border-white/10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            <!-- Логотип -->
+            <a href="#" class="flex items-center space-x-3 group">
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-neonPurple to-neonCyan p-0.5 flex items-center justify-center glow-purple transition duration-300 group-hover:scale-105">
+                    <div class="w-full h-full bg-darkBg rounded-[10px] flex items-center justify-center">
+                        <i class="fa-solid fa-cube text-neonCyan text-lg"></i>
+                    </div>
+                </div>
+                <span class="text-xl font-black tracking-wider bg-gradient-to-r from-white via-zinc-200 to-neonCyan bg-clip-text text-transparent">NLAUNCHER</span>
+            </a>
+
+            <!-- Десктоп навигация -->
+            <nav class="hidden md:flex items-center space-x-8 font-medium text-sm text-zinc-400">
+                <a href="#hero" class="hover:text-neonCyan transition">Главная</a>
+                <a href="#features" class="hover:text-neonCyan transition">Возможности</a>
+                <a href="#showcase" class="hover:text-neonCyan transition">Скриншоты</a>
+                <a href="#team" class="hover:text-neonCyan transition">Команда</a>
+            </nav>
+
+            <!-- Кнопка Скачать -->
+            <div class="hidden sm:flex items-center space-x-4">
+                <button onclick="openDownloadModal()" class="relative group px-6 py-2.5 rounded-xl font-bold text-sm overflow-hidden transition-all duration-300 transform hover:-translate-y-0.5 active:translate-y-0">
+                    <span class="absolute inset-0 bg-gradient-to-r from-neonPurple to-neonCyan transition-all duration-300 group-hover:opacity-90"></span>
+                    <span class="relative z-10 flex items-center space-x-2 text-white">
+                        <i class="fa-brands fa-windows text-base"></i>
+                        <span>Скачать для Windows</span>
+                    </span>
+                </button>
+            </div>
+
+            <!-- Кнопка мобильного меню -->
+            <button onclick="toggleMobileMenu()" class="md:hidden text-zinc-300 hover:text-white focus:outline-none p-2">
+                <i id="menu-icon" class="fa-solid fa-bars text-xl"></i>
+            </button>
+        </div>
+
+        <!-- Мобильное меню -->
+        <div id="mobile-menu" class="hidden md:hidden glass-card border-t border-white/10 px-6 py-6 space-y-4">
+            <a href="#hero" onclick="toggleMobileMenu()" class="block text-zinc-300 hover:text-neonCyan font-medium">Главная</a>
+            <a href="#features" onclick="toggleMobileMenu()" class="block text-zinc-300 hover:text-neonCyan font-medium">Возможности</a>
+            <a href="#showcase" onclick="toggleMobileMenu()" class="block text-zinc-300 hover:text-neonCyan font-medium">Скриншоты</a>
+            <a href="#team" onclick="toggleMobileMenu()" class="block text-zinc-300 hover:text-neonCyan font-medium">Команда</a>
+            <button onclick="openDownloadModal(); toggleMobileMenu();" class="w-full py-3 rounded-xl bg-gradient-to-r from-neonPurple to-neonCyan font-bold text-white text-center flex items-center justify-center space-x-2">
+                <i class="fa-brands fa-windows"></i>
+                <span>Скачать для Windows</span>
+            </button>
+        </div>
+    </header>
+
+    <!-- Основной контент -->
+    <main class="flex-grow">
+        <!-- Главная секция (Hero) -->
+        <section id="hero" class="relative pt-32 pb-20 lg:pt-44 lg:pb-32 overflow-hidden">
+            <!-- Фоновые свечения -->
+            <div class="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-neonPurple/15 rounded-full blur-[140px] pointer-events-none"></div>
+            <div class="absolute top-1/3 left-1/4 w-[400px] h-[400px] bg-neonCyan/10 rounded-full blur-[120px] pointer-events-none"></div>
+
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
+                <!-- Бейджик версии -->
+                <div class="inline-flex items-center space-x-2 px-4 py-1.5 rounded-full glass-card border border-neonPurple/40 text-neonCyan text-xs sm:text-sm font-semibold mb-6 shadow-lg shadow-purple-950/40">
+                    <i class="fa-brands fa-windows text-neonCyan"></i>
+                    <span>Поддержка Windows 10 / 11 (x64)</span>
+                </div>
+
+                <!-- Главный заголовок -->
+                <h1 class="text-4xl sm:text-6xl lg:text-7xl font-black tracking-tight max-w-4xl mx-auto leading-tight sm:leading-none">
+                    NLauncher — Твой идеальный <span class="bg-gradient-to-r from-neonPurple via-purple-300 to-neonCyan bg-clip-text text-transparent">Minecraft</span>
+                </h1>
+
+                <!-- Подзаголовок -->
+                <p class="mt-6 text-lg sm:text-xl text-zinc-400 max-w-2xl mx-auto font-normal leading-relaxed">
+                    Новый уровень комфорта: оптимизация FPS, поддержка всех версий и автоматическая установка модов в один клик.
+                </p>
+
+                <!-- Основная кнопка скачать -->
+                <div class="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
+                    <button onclick="openDownloadModal()" class="w-full sm:w-auto px-8 py-4 rounded-xl font-extrabold text-base bg-gradient-to-r from-neonPurple to-neonCyan text-white shadow-[0_0_35px_rgba(168,85,247,0.4)] hover:shadow-[0_0_55px_rgba(6,182,212,0.6)] transition-all duration-300 transform hover:-translate-y-1 flex items-center justify-center space-x-3">
+                        <i class="fa-brands fa-windows text-xl"></i>
+                        <span>Скачать для Windows (.exe)</span>
+                    </button>
+                    <a href="#features" class="w-full sm:w-auto px-8 py-4 rounded-xl font-bold text-base glass-card hover:bg-white/10 transition-all duration-300 text-zinc-300 flex items-center justify-center space-x-2">
+                        <i class="fa-solid fa-circle-info text-neonCyan"></i>
+                        <span>Узнать больше</span>
+                    </a>
+                </div>
+
+                <!-- Плашки со статистикой -->
+                <div class="mt-16 grid grid-cols-2 md:grid-cols-4 gap-4 max-w-4xl mx-auto">
+                    <div class="glass-card p-4 rounded-2xl">
+                        <div class="text-2xl sm:text-3xl font-black text-white">100%</div>
+                        <div class="text-xs sm:text-sm text-zinc-400 mt-1">Бесплатно</div>
+                    </div>
+                    <div class="glass-card p-4 rounded-2xl">
+                        <div class="text-2xl sm:text-3xl font-black text-neonCyan">+40%</div>
+                        <div class="text-xs sm:text-sm text-zinc-400 mt-1">Прирост FPS</div>
+                    </div>
+                    <div class="glass-card p-4 rounded-2xl">
+                        <div class="text-2xl sm:text-3xl font-black text-neonPurple">0.2 сек</div>
+                        <div class="text-xs sm:text-sm text-zinc-400 mt-1">Скорость запуска</div>
+                    </div>
+                    <div class="glass-card p-4 rounded-2xl">
+                        <div class="text-2xl sm:text-3xl font-black text-white">Win 10/11</div>
+                        <div class="text-xs sm:text-sm text-zinc-400 mt-1">Совместимость</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Секция возможностей (Features) -->
+        <section id="features" class="py-20 bg-zinc-950/60 relative">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center max-w-3xl mx-auto mb-16">
+                    <h2 class="text-3xl sm:text-4xl font-black tracking-tight">Создан для максимального комфорта</h2>
+                    <p class="mt-4 text-zinc-400 text-lg">Каждая функция оптимизирована специально для работы в операционной системе Windows.</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <!-- Карточка 1 -->
+                    <div class="glass-card p-6 rounded-2xl hover:border-neonPurple/50 transition duration-300 group">
+                        <div class="w-12 h-12 rounded-xl bg-neonPurple/10 flex items-center justify-center text-neonPurple text-xl mb-5 group-hover:scale-110 transition duration-300">
+                            <i class="fa-solid fa-gauge-high"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-white mb-2">Максимальная оптимизация FPS</h3>
+                        <p class="text-zinc-400 text-sm leading-relaxed">Интеллектуальное распределение ОЗУ и виртуальной памяти Windows для плавности геймплея без фризов.</p>
+                    </div>
+
+                    <!-- Карточка 2 -->
+                    <div class="glass-card p-6 rounded-2xl hover:border-neonCyan/50 transition duration-300 group">
+                        <div class="w-12 h-12 rounded-xl bg-neonCyan/10 flex items-center justify-center text-neonCyan text-xl mb-5 group-hover:scale-110 transition duration-300">
+                            <i class="fa-solid fa-layer-group"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-white mb-2">Все версии в 1 клик</h3>
+                        <p class="text-zinc-400 text-sm leading-relaxed">Мгновенная загрузка Forge, Fabric, OptiFine, NeoForge и Quilt без ручной настройки файлов.</p>
+                    </div>
+
+                    <!-- Карточка 3 -->
+                    <div class="glass-card p-6 rounded-2xl hover:border-neonPurple/50 transition duration-300 group">
+                        <div class="w-12 h-12 rounded-xl bg-neonPurple/10 flex items-center justify-center text-neonPurple text-xl mb-5 group-hover:scale-110 transition duration-300">
+                            <i class="fa-solid fa-wand-magic-sparkles"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-white mb-2">Красивый интерфейс</h3>
+                        <p class="text-zinc-400 text-sm leading-relaxed">Современный неоновый стеклянный дизайн в стиле современных Windows 11 приложений.</p>
+                    </div>
+
+                    <!-- Карточка 4 -->
+                    <div class="glass-card p-6 rounded-2xl hover:border-neonCyan/50 transition duration-300 group">
+                        <div class="w-12 h-12 rounded-xl bg-neonCyan/10 flex items-center justify-center text-neonCyan text-xl mb-5 group-hover:scale-110 transition duration-300">
+                            <i class="fa-solid fa-shield-halved"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-white mb-2">Безопасность и стабильность</h3>
+                        <p class="text-zinc-400 text-sm leading-relaxed">Защищенный процесс авторизации и быстрая проверка целостности игровых файлов.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Секция демонстрации лаунчера (Showcase) -->
+        <section id="showcase" class="py-20 relative">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center max-w-3xl mx-auto mb-16">
+                    <h2 class="text-3xl sm:text-4xl font-black tracking-tight">Интерфейс будущего</h2>
+                    <p class="mt-4 text-zinc-400 text-lg">Никакой лишней рекламы и сложных меню — всё под рукой.</p>
+                </div>
+
+                <!-- Макет окна Windows лаунчера -->
+                <div class="glass-card rounded-2xl p-2 sm:p-4 glow-purple max-w-5xl mx-auto border border-white/10 relative overflow-hidden">
+                    <!-- Оконная панель Windows -->
+                    <div class="flex items-center justify-between pb-4 border-b border-white/10 px-3">
+                        <div class="flex items-center space-x-3">
+                            <i class="fa-solid fa-cube text-neonCyan text-sm"></i>
+                            <span class="text-xs font-mono text-zinc-300">NLauncher Windows Edition v2.4</span>
+                        </div>
+                        <!-- Иконки окна Windows -->
+                        <div class="flex items-center space-x-4 text-xs text-zinc-400">
+                            <i class="fa-solid fa-minus hover:text-white cursor-pointer"></i>
+                            <i class="fa-regular fa-square hover:text-white cursor-pointer"></i>
+                            <i class="fa-solid fa-xmark hover:text-red-400 cursor-pointer"></i>
+                        </div>
+                    </div>
+
+                    <!-- Внутренний интерфейс -->
+                    <div class="grid grid-cols-1 lg:grid-cols-4 gap-4 mt-4">
+                        <div class="glass-card p-4 rounded-xl space-y-2 hidden lg:block">
+                            <div class="flex items-center space-x-3 p-3 rounded-lg bg-neonPurple/20 text-white font-semibold text-sm border border-neonPurple/30">
+                                <i class="fa-solid fa-house text-neonPurple"></i>
+                                <span>Главная</span>
+                            </div>
+                            <div class="flex items-center space-x-3 p-3 rounded-lg text-zinc-400 hover:bg-white/5 transition cursor-pointer text-sm font-medium">
+                                <i class="fa-solid fa-download text-zinc-400"></i>
+                                <span>Модпаки</span>
+                            </div>
+                            <div class="flex items-center space-x-3 p-3 rounded-lg text-zinc-400 hover:bg-white/5 transition cursor-pointer text-sm font-medium">
+                                <i class="fa-solid fa-gear text-zinc-400"></i>
+                                <span>Настройки</span>
+                            </div>
+                        </div>
+
+                        <div class="lg:col-span-3 glass-card p-6 rounded-xl flex flex-col justify-between relative overflow-hidden bg-gradient-to-br from-zinc-900/90 to-purple-950/40 min-h-[320px]">
+                            <div>
+                                <span class="px-3 py-1 rounded bg-neonCyan/20 text-neonCyan text-xs font-bold">ГОТОВО К ЗАПУСКУ</span>
+                                <h3 class="text-2xl sm:text-3xl font-black text-white mt-3">Minecraft 1.20.4 (OptiFine + Fabric)</h3>
+                                <p class="text-zinc-400 text-sm mt-2 max-w-md">Автоматически выделено 6144 МБ ОЗУ. Режим приоритета Windows активирован.</p>
+                            </div>
+                            <div class="mt-8 flex flex-wrap items-center justify-between gap-4">
+                                <div class="flex items-center space-x-3">
+                                    <div class="w-10 h-10 rounded-lg bg-zinc-800 border border-neonPurple/40 flex items-center justify-center font-bold text-neonCyan">
+                                        Steve
+                                    </div>
+                                    <div>
+                                        <div class="font-bold text-sm text-white">Player_Win11</div>
+                                        <div class="text-xs text-green-400">● В сети</div>
+                                    </div>
+                                </div>
+                                <button onclick="openDownloadModal()" class="px-8 py-3 rounded-xl font-extrabold bg-gradient-to-r from-neonPurple to-neonCyan text-white shadow-lg shadow-purple-500/30 hover:scale-105 transition">
+                                    <i class="fa-solid fa-play mr-2"></i> ИГРАТЬ
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Секция команды / Авторы -->
+        <section id="team" class="py-20 bg-zinc-950/60 relative">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center max-w-3xl mx-auto mb-16">
+                    <h2 class="text-3xl sm:text-4xl font-black tracking-tight">Разработчики проекта</h2>
+                    <p class="mt-4 text-zinc-400 text-lg">Команда, создавшая самый быстрый лаунчер для Windows</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+                    <!-- Карточка 1: Артём -->
+                    <div class="glass-card p-6 rounded-2xl flex flex-col sm:flex-row items-center sm:items-start text-center sm:text-left space-y-4 sm:space-y-0 sm:space-x-5 border border-white/10 hover:border-neonCyan/40 transition duration-300 group">
+                        <div class="w-20 h-20 rounded-2xl bg-gradient-to-br from-zinc-800 to-zinc-900 flex items-center justify-center text-neonCyan text-3xl font-black border border-neonCyan/30 shrink-0 shadow-lg group-hover:scale-105 transition duration-300">
+                            <i class="fa-solid fa-code"></i>
+                        </div>
+                        <div class="flex-grow">
+                            <div class="flex flex-col sm:flex-row sm:items-center justify-between mb-2">
+                                <h3 class="text-xl font-bold text-white">Артём</h3>
+                                <span class="text-[10px] uppercase font-bold tracking-wider px-2.5 py-0.5 rounded-full bg-neonCyan/10 text-neonCyan border border-neonCyan/20 self-center sm:self-auto mt-1 sm:mt-0">
+                                    Lead Developer
+                                </span>
+                            </div>
+                            <p class="text-zinc-400 text-xs leading-relaxed mb-3">
+                                Разработка ядра лаунчера, архитектура взаимодействия с системными процессами Windows и алгоритмы ускорения старта.
+                            </p>
+                            <div class="text-[11px] text-green-400 font-medium flex items-center justify-center sm:justify-start space-x-1.5">
+                                <span class="w-2 h-2 rounded-full bg-green-400 animate-pulse"></span>
+                                <span>Активно разрабатывает NLauncher</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Карточка 2: Ваня -->
+                    <div class="glass-card p-6 rounded-2xl flex flex-col sm:flex-row items-center sm:items-start text-center sm:text-left space-y-4 sm:space-y-0 sm:space-x-5 border border-white/10 hover:border-neonPurple/40 transition duration-300 group">
+                        <div class="relative shrink-0">
+                            <img 
+                                src="vanya.png" 
+                                onerror="this.onerror=null; this.src='https://placehold.co/160x160/101016/a855f7?text=VANYA';" 
+                                alt="Ваня" 
+                                class="w-20 h-20 rounded-2xl object-cover border border-neonPurple/40 shadow-lg group-hover:scale-105 transition duration-300"
+                            />
+                        </div>
+                        <div class="flex-grow">
+                            <div class="flex flex-col sm:flex-row sm:items-center justify-between mb-2">
+                                <h3 class="text-xl font-bold text-white">Ваня</h3>
+                                <span class="text-[10px] uppercase font-bold tracking-wider px-2.5 py-0.5 rounded-full bg-neonPurple/10 text-neonPurple border border-neonPurple/20 self-center sm:self-auto mt-1 sm:mt-0">
+                                    Co-Founder & Lead UI/UX
+                                </span>
+                            </div>
+                            <p class="text-zinc-400 text-xs leading-relaxed mb-3">
+                                Проектирование пользовательского интерфейса, оптимизация дистрибутива и системы защиты клиента.
+                            </p>
+                            <div class="text-[11px] text-neonPurple font-medium flex items-center justify-center sm:justify-start space-x-1.5">
+                                <span class="w-2 h-2 rounded-full bg-neonPurple animate-pulse"></span>
+                                <span>Дизайн и архитектура NLauncher</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Футер (Только Telegram) -->
+    <footer class="border-t border-white/10 bg-darkBg text-zinc-400 text-sm mt-auto">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+            <div class="flex flex-col sm:flex-row items-center justify-between gap-4">
+                <!-- Бренд -->
+                <div class="flex items-center space-x-3">
+                    <div class="w-8 h-8 rounded-xl bg-gradient-to-tr from-neonPurple to-neonCyan p-0.5 flex items-center justify-center glow-purple">
+                        <div class="w-full h-full bg-darkBg rounded-[10px] flex items-center justify-center">
+                            <i class="fa-solid fa-cube text-neonCyan text-xs"></i>
+                        </div>
+                    </div>
+                    <span class="font-black text-white tracking-wider text-sm">NLAUNCHER</span>
+                </div>
+
+                <!-- Сообщество / Telegram -->
+                <a href="https://t.me" target="_blank" rel="noopener noreferrer" class="inline-flex items-center space-x-2 px-4 py-2 rounded-xl bg-gradient-to-r from-sky-500/10 to-blue-600/10 border border-sky-500/30 text-sky-400 hover:text-white hover:bg-sky-500/20 transition-all duration-300 font-semibold text-xs">
+                    <i class="fa-brands fa-telegram text-base"></i>
+                    <span>Наш Telegram Канал</span>
+                </a>
+
+                <!-- Копирайт -->
+                <p class="text-xs text-zinc-500">
+                    &copy; 2026 NLauncher Team
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Модальное окно загрузки для Windows -->
+    <div id="download-modal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm hidden">
+        <div class="glass-card p-8 rounded-2xl max-w-md w-full mx-4 border border-white/10 shadow-2xl relative text-center">
+            <button onclick="closeDownloadModal()" class="absolute top-4 right-4 text-zinc-400 hover:text-white">
+                <i class="fa-solid fa-xmark text-lg"></i>
+            </button>
+            <div class="w-16 h-16 rounded-2xl bg-gradient-to-tr from-neonPurple to-neonCyan mx-auto flex items-center justify-center text-white text-3xl mb-4 glow-purple">
+                <i class="fa-brands fa-windows"></i>
+            </div>
+            <h3 class="text-2xl font-bold text-white mb-2">Загрузка NLauncher</h3>
+            <p id="download-status" class="text-sm text-zinc-400 mb-6">Подготовка Windows инсталлятора...</p>
+            
+            <div class="w-full bg-zinc-800 rounded-full h-3 mb-6 overflow-hidden">
+                <div id="progress-bar" class="bg-gradient-to-r from-neonPurple to-neonCyan h-3 rounded-full w-0 transition-all duration-300"></div>
+            </div>
+
+            <div id="download-success" class="hidden">
+                <p class="text-green-400 font-semibold mb-4 text-sm"><i class="fa-solid fa-circle-check mr-2"></i> Файл NLauncher_Setup.exe готов!</p>
+                <button onclick="closeDownloadModal()" class="w-full py-3 rounded-xl bg-zinc-800 hover:bg-zinc-700 font-medium text-white transition text-sm">Закрыть</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript логика -->
+    <script>
+        // Переключение мобильного меню
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            const icon = document.getElementById('menu-icon');
+            menu.classList.toggle('hidden');
+            if (menu.classList.contains('hidden')) {
+                icon.classList.remove('fa-xmark');
+                icon.classList.add('fa-bars');
+            } else {
+                icon.classList.remove('fa-bars');
+                icon.classList.add('fa-xmark');
+            }
+        }
+
+        // Модалка скачивания для Windows
+        function openDownloadModal() {
+            const modal = document.getElementById('download-modal');
+            const progressBar = document.getElementById('progress-bar');
+            const status = document.getElementById('download-status');
+            const success = document.getElementById('download-success');
+            
+            modal.classList.remove('hidden');
+            progressBar.style.width = '0%';
+            success.classList.add('hidden');
+            status.textContent = 'Проверка компонентов Windows x64...';
+
+            setTimeout(() => {
+                progressBar.style.width = '50%';
+                status.textContent = 'Загрузка NLauncher_Setup.exe...';
+            }, 500);
+
+            setTimeout(() => {
+                progressBar.style.width = '100%';
+                status.textContent = 'Готово!';
+                success.classList.remove('hidden');
+            }, 1500);
+        }
+
+        function closeDownloadModal() {
+            document.getElementById('download-modal').classList.add('hidden');
+        }
+    </script>
+</body>
+</html>
